@@ -1,0 +1,13 @@
+# Exercice 1 : pipeline qui écrit "Hello World"
+name: 01 - Hello World
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dire bonjour
+        run: echo "Hello World"

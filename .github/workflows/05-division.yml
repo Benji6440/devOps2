@@ -1,0 +1,48 @@
+# Exercice 5 : Dev divise par 2, Val par 4, Prod par 8.
+# Chaque étape vérifie que le nombre reçu est pair ; sinon le job échoue
+# et les étapes suivantes ne sont pas lancées.
+name: 05 - Division Dev Val Prod
+
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      nombre:
+        description: "Nombre de départ"
+        required: true
+        default: "128"
+
+env:
+  NOMBRE_INITIAL: ${{ inputs.nombre || '128' }}
+
+jobs:
+  Dev:
+    runs-on: ubuntu-latest
+    outputs:
+      resultat: ${{ steps.div.outputs.resultat }}
+    steps:
+      - uses: actions/checkout@v7
+      - id: div
+        run: python3 scripts/divide.py "$NOMBRE_INITIAL" 2
+
+  Val:
+    needs: Dev
+    runs-on: ubuntu-latest
+    outputs:
+      resultat: ${{ steps.div.outputs.resultat }}
+    steps:
+      - uses: actions/checkout@v7
+      - id: div
+        env:
+          NOMBRE: ${{ needs.Dev.outputs.resultat }}
+        run: python3 scripts/divide.py "$NOMBRE" 4
+
+  Prod:
+    needs: Val
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - id: div
+        env:
+          NOMBRE: ${{ needs.Val.outputs.resultat }}
+        run: python3 scripts/divide.py "$NOMBRE" 8

@@ -1,0 +1,17 @@
+# Exercice 4 : affiche le nom de la branche sur laquelle tourne la pipeline
+name: 04 - Nom de branche
+
+on:
+  push:
+    branches: [Dev, Val, Prod]
+  workflow_dispatch:
+
+jobs:
+  branche:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Afficher la branche
+        env:
+          BRANCHE: ${{ github.ref_name }}
+        run: |
+          echo "La pipeline tourne sur la branche : $BRANCHE"

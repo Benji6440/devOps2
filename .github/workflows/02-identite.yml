@@ -1,0 +1,36 @@
+# Exercice 2 : trois jobs qui écrivent nom, prénom et email.
+# Les valeurs viennent des variables du repo (Settings > Secrets and variables
+# > Actions > onglet "Variables") : NOM, PRENOM, EMAIL.
+name: 02 - Identite
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  nom:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Afficher le nom
+        env:
+          NOM: ${{ vars.NOM }}
+        run: |
+          echo "Nom : ${NOM:?Variable de repo NOM non definie}"
+
+  prenom:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Afficher le prénom
+        env:
+          PRENOM: ${{ vars.PRENOM }}
+        run: |
+          echo "Prénom : ${PRENOM:?Variable de repo PRENOM non definie}"
+
+  email:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Afficher l'email
+        env:
+          EMAIL: ${{ vars.EMAIL }}
+        run: |
+          echo "Email : ${EMAIL:?Variable de repo EMAIL non definie}"

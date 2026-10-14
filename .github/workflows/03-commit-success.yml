@@ -1,0 +1,19 @@
+# Exercice 3 : script Python lancé à chaque commit poussé, sur toutes les branches
+name: 03 - Commit success
+
+on:
+  push:
+    branches: ["**"]
+
+jobs:
+  commit-success:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Lancer le script
+        run: python scripts/commit_success.py
